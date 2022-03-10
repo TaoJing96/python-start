@@ -25,6 +25,12 @@ def for_basic():
         print(n)
 
 
+def range_basic():
+    for i in range(1, 2): # 2不会输出
+        print(i)
+    for i in range(2, 1, -1): # -1是步长 1不会输出
+        print(i)
+
 def pass_basic():
     if 1 > 2:
         print("impossible")
@@ -51,3 +57,5 @@ if __name__ == "__main__":
     pass_basic()
     print("dir_basic")
     dir_basic()
+    print("range_basic")
+    range_basic()

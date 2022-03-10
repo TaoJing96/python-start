@@ -6,22 +6,27 @@ class ListNode:
 
 
 class Solution:
-    def lengthOfLongestSubstring(self, s: str) -> int:
-        d = dict()
-        l, r = 0, 0
-        ans = 1
-        while r < len(s):
-            if s[r] not in d or d[s[r]] < l:
-                ans = max(ans, r - l + 1)
-            else:
-                v = d.get(s[r])
-                ans = max(ans, r - l)
-                l = v + 1
-            d[s[r]] = r
-            r += 1
+    def longestPalindrome(self, s: str) -> str:
+        if len(s) == 0:
+            return ""
+        dp = [[0] * len(s) for _ in range(len(s))]
+        maxLen = 1
+        ans = s[0]
+        for i in range(1, len(s)):
+            for j in range(i - 1, -1, -1):
+                if s[i] == s[j]:
+                    if i - j <= 2:
+                        dp[j][i] = i - j + 1
+                    elif dp[j + 1][i - 1] > 0:
+                        dp[j][i] = 2 + dp[j + 1][i - 1]
+                if dp[j][i] > maxLen:
+                    maxLen = dp[j][i]
+                    ans = s[j:i+1]
         return ans
 
 
 if __name__ == "__main__":
     solution = Solution()
-    print(solution.lengthOfLongestSubstring("tmmzuxt"))
+    print(solution.longestPalindrome("aacabdkacaa"))
+    print(solution.longestPalindrome("aacaa"))
+    # print(solution.longestPalindrome("aca"))
