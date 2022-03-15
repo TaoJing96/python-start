@@ -10,5 +10,13 @@ def list_append():
         print(i)
 
 
+def list_add(arr):
+    arr.append(2)
+
+
 if __name__ == "__main__":
     list_append()
+    arr = []
+    print(arr)
+    list_add(arr)
+    print(arr)

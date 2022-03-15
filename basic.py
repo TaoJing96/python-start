@@ -1,3 +1,5 @@
+from typing import Optional, Union
+
 import a
 import math
 
@@ -46,6 +48,14 @@ def dir_basic():
     print(dir())
 
 
+def optional_basic(i: Optional[int] = None):
+    print(i)
+
+
+def union_basic(i: Union[int, None] = None):
+    print(i)
+
+
 if __name__ == "__main__":
     print("if_basic")
     if_basic()
@@ -59,3 +69,9 @@ if __name__ == "__main__":
     dir_basic()
     print("range_basic")
     range_basic()
+    print("optional_basic")
+    optional_basic()
+    optional_basic(1)
+    print("union_basic")
+    union_basic()
+    union_basic(1)
