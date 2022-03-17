@@ -21,22 +21,22 @@ class TreeNode:
         self.right = None
 
 
+# 【3,4,5,1,2] 为 [1,2,3,4,5] 2 3 1  2
 class Solution:
-    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
-        return self.helper(preorder, inorder, 0, len(preorder) - 1, 0, len(inorder) - 1)
-
-    def helper(self, preorder: List[int], inorder: List[int], preLeft: int, preRight: int, inLeft: int, inRight: int) -> Optional[TreeNode]:
-        if preLeft > preRight or inLeft > inRight:
-            return None
-        for i in range(inLeft, inRight + 1):
-            if inorder[i] == preorder[preLeft]:
-                node = TreeNode(inorder[i])
-                leftLen = i - inLeft
-                node.left = self.helper(preorder, inorder, preLeft + 1, leftLen + preLeft, inLeft, i - 1)
-                node.right = self.helper(preorder, inorder, leftLen + preLeft + 1, preRight, i + 1, inRight)
-                return node
-        return None
+    def minArray(self, numbers: List[int]) -> int:
+        l = 0
+        r = len(numbers) - 1
+        while l < r:
+            mid = (l + r) >> 1
+            if numbers[r] == numbers[l]:
+                l += 1
+            elif numbers[r] >= numbers[mid]:
+                r = mid
+            else:
+                l = mid + 1
+        return numbers[l]
 
 
 if __name__ == "__main__":
-    solution = Solution()
+    s = Solution()
+    print(s.minArray([3, 4, 5, 1, 2]))

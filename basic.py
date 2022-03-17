@@ -56,6 +56,31 @@ def union_basic(i: Union[int, None] = None):
     print(i)
 
 
+def mod_basic():
+    print(5 % 1e+9)
+    print(5 % 10 ** 9) # 取模后为整数
+
+
+def args_basic():
+   args(1, 'a', 'b', name="tj", gender="sex")
+
+
+def args(age, *args, **kwargs):
+    print("args")
+    print(age)
+    print(args)
+    print(kwargs)
+    args_copy(age, *args, kwargs) # kwargsa 放入args元组中了
+    args_copy(age, *args, **kwargs)
+
+
+def args_copy(age, *args, **kwargs):
+    print("args_copy")
+    print(age)
+    print(args)
+    print(kwargs)
+
+
 if __name__ == "__main__":
     print("if_basic")
     if_basic()
@@ -75,3 +100,7 @@ if __name__ == "__main__":
     print("union_basic")
     union_basic()
     union_basic(1)
+    print("mod_basic")
+    mod_basic()
+    print("args_basic")
+    args_basic()
