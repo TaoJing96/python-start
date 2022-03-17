@@ -1,7 +1,7 @@
 from typing import Optional, Union
 
 import a
-import math
+from a import flag, arr
 
 
 def if_basic():
@@ -81,6 +81,15 @@ def args_copy(age, *args, **kwargs):
     print(kwargs)
 
 
+def multi_module():
+    # flag = True
+    # print(a.flag) # 这样改变不了a模块的flag，flag临时变量指向的内存地址发生改变
+
+    arr.append(3) # 可以改变a模块的arr
+    print(arr)
+    a.flag = True
+    print(a.flag)
+
 if __name__ == "__main__":
     print("if_basic")
     if_basic()
@@ -104,3 +113,5 @@ if __name__ == "__main__":
     mod_basic()
     print("args_basic")
     args_basic()
+    print("multi_module")
+    multi_module()

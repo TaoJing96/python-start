@@ -1,3 +1,6 @@
+flag = False
+arr = []
+
 def say(num: int, num2: int):
     print("%d" % (num + num2))
 
