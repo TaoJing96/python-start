@@ -21,22 +21,37 @@ class TreeNode:
         self.right = None
 
 
-# 【3,4,5,1,2] 为 [1,2,3,4,5] 2 3 1  2
 class Solution:
-    def minArray(self, numbers: List[int]) -> int:
-        l = 0
-        r = len(numbers) - 1
-        while l < r:
-            mid = (l + r) >> 1
-            if numbers[r] == numbers[l]:
-                l += 1
-            elif numbers[r] >= numbers[mid]:
-                r = mid
-            else:
-                l = mid + 1
-        return numbers[l]
+
+    result = 0
+
+    def movingCount(self, m: int, n: int, k: int) -> int:
+        self.result = 0
+        trace = [[False for i in range(n)] for i in range(m)]
+        self.dfs(m, n, k, 0, 0, trace)
+        return self.result
+
+    def dfs(self, m: int, n: int, k: int, x: int, y: int, trace: List[List[bool]]):
+        if x >= m or x < 0 or y >= n or y < 0 or not trace[x][y]:
+            return
+        if self.bitSum(x) + self.bitSum(y) > k:
+            return
+        self.result += 1
+        trace[x][y] = True
+        self.dfs(m, n, k, x - 1, y, trace)
+        self.dfs(m, n, k, x + 1, y, trace)
+        self.dfs(m, n, k, x, y - 1, trace)
+        self.dfs(m, n, k, x, y + 1, trace)
+
+    def bitSum(self, m: int) -> int:
+        ans = 0
+        while m > 0:
+            ans += m % 10
+            m //= 10
+        return ans
 
 
 if __name__ == "__main__":
     s = Solution()
-    print(s.minArray([3, 4, 5, 1, 2]))
+
+    print(1 + "" + 2)
