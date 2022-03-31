@@ -90,6 +90,25 @@ def multi_module():
     a.flag = True
     print(a.flag)
 
+
+def decorator(func):
+    # 生成新的函数返回
+    def new_func():
+        print("decorator logic")
+        func()
+    return new_func
+
+
+def decorator_basic():
+    say_hi()
+
+
+# 会生成新的函数
+@decorator
+def say_hi():
+    print("hi")
+
+
 if __name__ == "__main__":
     print("if_basic")
     if_basic()
@@ -115,3 +134,5 @@ if __name__ == "__main__":
     args_basic()
     print("multi_module")
     multi_module()
+    print("decorator_basic")
+    decorator_basic()

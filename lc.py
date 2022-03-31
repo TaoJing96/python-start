@@ -8,10 +8,10 @@ class ListNode:
         self.next = next
 
 
-class Node:
-    def __init__(self, val=None, children=None):
-        self.val = val
-        self.children = children
+# class Node:
+#     def __init__(self, val=None, children=None):
+#         self.val = val
+#         self.children = children
 
 
 class TreeNode:
@@ -21,37 +21,33 @@ class TreeNode:
         self.right = None
 
 
+class Node:
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
 class Solution:
-
-    result = 0
-
-    def movingCount(self, m: int, n: int, k: int) -> int:
-        self.result = 0
-        trace = [[False for i in range(n)] for i in range(m)]
-        self.dfs(m, n, k, 0, 0, trace)
-        return self.result
-
-    def dfs(self, m: int, n: int, k: int, x: int, y: int, trace: List[List[bool]]):
-        if x >= m or x < 0 or y >= n or y < 0 or not trace[x][y]:
-            return
-        if self.bitSum(x) + self.bitSum(y) > k:
-            return
-        self.result += 1
-        trace[x][y] = True
-        self.dfs(m, n, k, x - 1, y, trace)
-        self.dfs(m, n, k, x + 1, y, trace)
-        self.dfs(m, n, k, x, y - 1, trace)
-        self.dfs(m, n, k, x, y + 1, trace)
-
-    def bitSum(self, m: int) -> int:
-        ans = 0
-        while m > 0:
-            ans += m % 10
-            m //= 10
+    def selfDividingNumbers(self, left: int, right: int) -> List[int]:
+        ans = []
+        while left <= right:
+            if self.legal(left):
+                ans.append(left)
+            left += 1
         return ans
 
 
+    def legal(self, num: int) -> bool:
+        n = num
+        while n > 0:
+            m = n % 10
+            if m == 0 or num % m != 0:
+                return False
+            n //= 10
+        return True
+
+
+# [6,3] [7, 5]
 if __name__ == "__main__":
     s = Solution()
-
-    print(1 + "" + 2)
+    print(s.hasAlternatingBits(7))
