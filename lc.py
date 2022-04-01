@@ -27,25 +27,21 @@ class Node:
         self.left = left
         self.right = right
 
+
 class Solution:
-    def selfDividingNumbers(self, left: int, right: int) -> List[int]:
+    def levelOrder(self, root: TreeNode) -> List[int]:
+        nodes = [root]
         ans = []
-        while left <= right:
-            if self.legal(left):
-                ans.append(left)
-            left += 1
-        return ans
-
-
-    def legal(self, num: int) -> bool:
-        n = num
-        while n > 0:
-            m = n % 10
-            if m == 0 or num % m != 0:
-                return False
-            n //= 10
-        return True
-
+        while len(nodes) > 0:
+            tmp = []
+            for node in nodes:
+                ans.append(node.val)
+                if node.left is not None:
+                    tmp.append(node.left)
+                if node.right is not None:
+                    tmp.append(node.right)
+            nodes = tmp
+        return nodes
 
 # [6,3] [7, 5]
 if __name__ == "__main__":
