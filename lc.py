@@ -1,4 +1,5 @@
 # Definition for singly-linked list.
+import math
 from typing import List, Optional
 
 
@@ -29,26 +30,34 @@ class Node:
 
 
 class Solution:
-    def levelOrder(self, root: TreeNode) -> List[List[int]]:
-        ans = []
-        queue = [root]
-        flag = True
-        while len(queue) > 0:
-            temp = []
-            level = []
-            for node in queue:
-                level.append(node.val)
-                if node.left is not None:
-                    temp.append(node.left)
-                if node.right is not None:
-                    temp.append(node.right)
-            if not flag:
-                queue.reverse()
-            flag = not flag
-            ans.append(level)
-            queue = temp
+
+    def countPrimeSetBits(self, left: int, right: int) -> int:
+        ans = 0
+        for i in range(left, right + 1, 1):
+            oneCount = one_bit_count(i)
+            if is_prime(oneCount):
+                ans += 1
         return ans
+
+
+def one_bit_count(n) -> int:
+    ans = 0
+    i = 0
+    while i < 32:
+        if n & (1 << i) != 0:
+            ans += 1
+        i += 1
+    return ans
+
+
+def is_prime(n) -> bool:
+    sqrt = int(math.sqrt(n))
+    for i in range(2, sqrt + 1, 1):
+        if n % i == 0:
+            return False
+    return True
+
 
 if __name__ == "__main__":
     s = Solution()
-    print(s.hasAlternatingBits(7))
+    print(s.countPrimeSetBits(6, 10))
