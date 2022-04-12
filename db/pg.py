@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import and_
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:koverdev0@koverdev0.c4pawlij3cb6.us-east-2.rds.amazonaws.com:5432/koverapi'
@@ -71,9 +72,21 @@ def query():
     product_list = Products.query.all()
     for product in product_list:
         print(product)
+    product = Products.query.filter(Products.product_id == 'PD164278801831', ).first()
+    print(product)
+
+
+def update():
+    # 只拿到影响行数
+    update_map = {"product_type":"ra"}
+    filters = (Products.product_id == 'PD164278801831', Products.update_ts > '2021-07-20T01:33:43.588675Z')
+    res = db.session.query(Products).filter(*filters).update(update_map)
+    db.session.commit()
+    print(res)
 
 
 if __name__ == '__main__':
-    query()
+    # query()
+    update()
     # app.run()
 

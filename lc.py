@@ -1,4 +1,5 @@
 # Definition for singly-linked list.
+import copy
 import math
 from typing import List, Optional
 
@@ -29,35 +30,52 @@ class Node:
         self.right = right
 
 
+class Node:
+    def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
+        self.val = int(x)
+        self.next = next
+        self.random = random
+
 class Solution:
+    def copyRandomList(self, head: 'Node') -> 'Node':
+        if not head:
+            return head
+        self.double(head)
+        self.setRandom(head)
+        return self.split(head)
 
-    def countPrimeSetBits(self, left: int, right: int) -> int:
-        ans = 0
-        for i in range(left, right + 1, 1):
-            oneCount = one_bit_count(i)
-            if is_prime(oneCount):
-                ans += 1
+    def double(self, head: 'Node'):
+        while head:
+            n = Node(head.val)
+            n.next = head.next
+            head.next = n
+            head = n.next
+
+
+    def setRandom(self, head: 'Node'):
+        while head:
+            if head.random:
+                head.next.random = head.random.next
+            head = head.next.next
+
+
+    def split(self, head: 'Node') -> 'Node':
+        ans = head.next
+        while head:
+            next = head.next
+            head.next = next.next
+            if next.next:
+                next.next = next.next.next
+            head = head.next
         return ans
-
-
-def one_bit_count(n) -> int:
-    ans = 0
-    i = 0
-    while i < 32:
-        if n & (1 << i) != 0:
-            ans += 1
-        i += 1
-    return ans
-
-
-def is_prime(n) -> bool:
-    sqrt = int(math.sqrt(n))
-    for i in range(2, sqrt + 1, 1):
-        if n % i == 0:
-            return False
-    return True
-
 
 if __name__ == "__main__":
     s = Solution()
-    print(s.countPrimeSetBits(6, 10))
+    n1 = Node(1)
+    n2 = Node(2)
+    n3 = Node(3)
+    n1.random = n3
+    n1.next = n2
+    n2.next = n3
+    n = s.copyRandomList(n1)
+    print(n)
