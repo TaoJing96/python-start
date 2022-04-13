@@ -30,52 +30,39 @@ class Node:
         self.right = right
 
 
-class Node:
-    def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
-        self.val = int(x)
-        self.next = next
-        self.random = random
-
 class Solution:
-    def copyRandomList(self, head: 'Node') -> 'Node':
-        if not head:
-            return head
-        self.double(head)
-        self.setRandom(head)
-        return self.split(head)
 
-    def double(self, head: 'Node'):
-        while head:
-            n = Node(head.val)
-            n.next = head.next
-            head.next = n
-            head = n.next
+    preNode = None
+    firstNode = None
 
-
-    def setRandom(self, head: 'Node'):
-        while head:
-            if head.random:
-                head.next.random = head.random.next
-            head = head.next.next
+    def treeToDoublyList(self, root: 'Node') -> 'Node':
+        if root is None:
+            return root
+        self.preNode = None
+        self.firstNode = None
+        self.post_order(root)
+        self.firstNode.left = self.preNode
+        self.preNode.right = self.firstNode
+        return self.firstNode
 
 
-    def split(self, head: 'Node') -> 'Node':
-        ans = head.next
-        while head:
-            next = head.next
-            head.next = next.next
-            if next.next:
-                next.next = next.next.next
-            head = head.next
-        return ans
+    def post_order(self, root: 'Node'):
+        if root is None:
+            return
+        left = root.left
+        right = root.right
+        self.post_order(left)
+        if not self.firstNode:
+            self.firstNode = root
+        if self.preNode:
+            self.preNode.right = root
+            root.left = self.preNode
+        self.preNode = root
+        self.post_order(right)
+
 
 if __name__ == "__main__":
     s = Solution()
     n1 = Node(1)
-    n2 = Node(2)
-    n3 = Node(3)
-    n1.random = n3
-    n1.next = n2
-    n2.next = n3
-    n = s.copyRandomList(n1)
+    n = s.treeToDoublyList(n1)
     print(n)

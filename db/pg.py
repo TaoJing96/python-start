@@ -1,9 +1,10 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import and_
+# from sqlalchemy import create_engine
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:koverdev0@koverdev0.c4pawlij3cb6.us-east-2.rds.amazonaws.com:5432/koverapi'
+app.config['SQLALCHEMY_ECHO'] = True # 会打印日志
 db = SQLAlchemy(app)
 
 
@@ -79,7 +80,7 @@ def query():
 def update():
     # 只拿到影响行数
     update_map = {"product_type":"ra"}
-    filters = (Products.product_id == 'PD164278801831', Products.update_ts > '2021-07-20T01:33:43.588675Z')
+    filters = [Products.product_id == 'PD164278801831', Products.update_ts > '2020-07-20T01:33:43.588675Z']
     res = db.session.query(Products).filter(*filters).update(update_map)
     db.session.commit()
     print(res)
